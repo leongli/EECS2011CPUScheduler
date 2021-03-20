@@ -109,7 +109,7 @@ public class modeller {
 				processPriority = scan.nextInt();
 				
 				//creating and storing new process with found info
-				process newProcess = new process(arivalTime, burstTime);
+				process newProcess = new process(arivalTime, burstTime, processPriority);
 				processes.add(newProcess);				
 			}
 			//call to conduct modeling with process list
@@ -135,7 +135,7 @@ public class modeller {
 				processPriority = scan.nextInt();
 				
 				//creating and storing new process with found info
-				process newProcess = new process(arivalTime, burstTime);
+				process newProcess = new process(arivalTime, burstTime, processPriority);
 				processes.add(newProcess);				
 			}
 			//call to conduct modeling with process list
@@ -162,7 +162,7 @@ public class modeller {
 				processPriority = scan.nextInt();
 				
 				//creating and storing new process with found info
-				process newProcess = new process(arivalTime, burstTime);
+				process newProcess = new process(arivalTime, burstTime, processPriority);
 				processes.add(newProcess);				
 			}
 			//call to conduct modeling with process list

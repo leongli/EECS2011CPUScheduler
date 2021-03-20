@@ -6,6 +6,11 @@ public class pre_Priority_Scheduler extends base_Scheduling_Class{
 	ArrayList<process> processes;
 	
 	pre_Priority_Scheduler(ArrayList<process> processes){
+		//initialize turnaround and wait time
+		this.totalTurnAroundTime = 0;
+		this.totalWaitTime = 0;
+		this.numProcesses = processes.size();
+		
 		//Initializes Array List
 		this.processes = new ArrayList<process>();
 		
@@ -31,38 +36,58 @@ public class pre_Priority_Scheduler extends base_Scheduling_Class{
 		int time = 0;
 		int turnaroundTime= 0;
 		int burst;
-		boolean terminated = true;
 		
-		while(!this.ready.isEmpty()) {
-			if(terminated) {
+		try {
+		
+		//goes through each second until all processes are terminated
+		while(!(this.ready.isEmpty() && this.processes.isEmpty())) {
+		
+			//Check if Ready has a process
+			if(!this.ready.isEmpty()) {
+				//Get the head process
+				p = (process) this.ready.element();
+				System.out.println("Executing Process, Time: " + time + ", ArivalTime: " + p.getArrivalTime() + ", burstTime: " + p.getBurstTime() + " Priority: " + p.getProcessPriority() );
 				
-			}
-			//remove a process from the ready queue
-			p = (process) this.ready.remove();
-			if(p.getBurstTime() > 1) {
+				//Adjust Burst Time
 				p.setBurstTime(p.getBurstTime() - 1);
-				time += p.getBurstTime();
-								
 				
-			}else {
+				//Check if Terminated
+				if(p.getBurstTime() == 0) {
+					this.ready.remove();//remove head process
+				}else {
+					this.totalWaitTime--;//Since the process is being executed
+				}
 				
-				time++;
-				
+				this.totalTurnAroundTime++;
+			
+				//Increments Wait time of each process waiting
+				for(Object prs: this.ready) {
+					this.totalWaitTime++;
+				}
 			}
 			
+			//increment time
+			time++;
+			
 			//adds any new arrivals to the queue
-			for(process prs: this.processes) {
+			for(int i = 0; i < processes.size(); i++) {
+				process prs = processes.get(i);
 				//if the process arrives add it to ready queue and remove from list
-				if(prs.getArrivalTime() == 0) {
-					this.ready.add(p);
+				if(prs.getArrivalTime() == time) {
+					System.out.println("New Process, Time: " + time + ", ArivalTime: " + prs.getArrivalTime() + ", burstTime: " + prs.getBurstTime() + " Priority: " + prs.getProcessPriority() );
+					this.ready.add(prs);
 					this.processes.remove(prs);
 				}
 			}
 			
-			//Calculates Wait time of each process waiting
-			for(Object prs: this.ready) {
-				totalWaitTime++;
-			}
+			
+			
 		}
+		}catch(Exception e) {
+			System.out.println("ERROR in WHILE LOOP");
+			System.out.println(e.getMessage());
+		}
+		//adjusting turnaround time to account for waiting time
+		this.totalTurnAroundTime += this.totalWaitTime;
 	}
 }
