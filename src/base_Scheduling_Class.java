@@ -8,19 +8,15 @@ public class base_Scheduling_Class {
 	double totalWaitTime;
 	double totalTurnAroundTime;
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 	//Method to calculate average wait time of processes sent to scheduler
-	public double averageWaitTime(double a, int b) {
+	public double averageWaitTime() {
 		
-		double wait = a / b;
+		double wait = this.totalWaitTime/ this.numProcesses;
 		return wait;
 	}
 	//Method to calculate average TurnAround time of processes sent to scheduler
-	public double averageTurnAroundTime(double a, int b) {
-		double turnArouindWait = a / b;
+	public double averageTurnAroundTime() {
+		double turnArouindWait = this.totalTurnAroundTime / this.numProcesses;
 		return turnArouindWait;
 	}
 	
