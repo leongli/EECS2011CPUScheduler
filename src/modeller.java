@@ -93,30 +93,64 @@ public class modeller {
 			System.out.println("The Average Waiting Time was: ");
 			System.out.println("The Average Turnaround Time was: ");
 		}else if (schedueller.equals("PS")) {
-			//New List to hold processes
+			// New List to hold processes
 			ArrayList<process> processes = new ArrayList<process>();
-			
-			//Loop to store info for each process
-			for(int p = 0; p < numP; p++) {
+
+			// Loop to store info for each process
+			for (int p = 0; p < numP; p++) {
 				System.out.println("Enter Info For Process " + (p + 1) + ": ");
-				System.out.println("Arival Time: ");
-				arivalTime = scan.nextInt();
-				
+				// System.out.println("Arival Time: ");
+				// arivalTime = scan.nextInt();
+
 				System.out.println("Burst Time: ");
 				burstTime = scan.nextInt();
-				
+				if (burstTime < 0) {
+					
+				}
 				System.out.println("Enter Priority");
 				processPriority = scan.nextInt();
-				
-				//creating and storing new process with found info
+				if (burstTime < 0) {
+					
+				}
+
+				// creating and storing new process with found info
 				process newProcess = new process(arivalTime, burstTime, processPriority);
-				processes.add(newProcess);				
+				processes.add(newProcess);
 			}
-			//call to conduct modeling with process list
-			
-			//Output of results
-			System.out.println("The Average Waiting Time was: ");
-			System.out.println("The Average Turnaround Time was: ");
+			// call to conduct modeling with process list
+			Collections.sort(processes); // sorts list from highest priority to lowest
+
+			int totalWaitTime = 0;
+			double avgWaitTime;
+			int totalTurnAroundTime = 0;
+			double avgTurnAroundTime;
+
+			int burstTimeArr[] = new int[processes.size()];
+			int turnAroundTime[] = new int[processes.size() + 1];
+			int waitingTime[] = new int[processes.size() + 1];
+
+ 
+			for (int i = 0; i < processes.size(); i++) { // stores burst times of sorted list into array
+				process str = processes.get(i);
+				burstTimeArr[i] += str.getBurstTime();
+			}
+
+			for (int i = 0; i < processes.size(); i++) { // // stores turnaround time and  waiting time of sorted list into array
+				turnAroundTime[i] = burstTimeArr[i] + waitingTime[i];
+				waitingTime[i + 1] = turnAroundTime[i];
+			}
+
+			for (int i = 0; i < processes.size(); i++) { // calculates total turnaround time and total waiting time
+				totalTurnAroundTime += (waitingTime[i] + burstTimeArr[i]);
+				totalWaitTime += waitingTime[i];
+			}
+			avgWaitTime = totalWaitTime / (double) processes.size(); // calculates average waiting time
+			avgTurnAroundTime = totalTurnAroundTime / (double) processes.size();// calculates average turnaround time
+
+			// Output of results
+			System.out.println("The Average Waiting Time was: " + avgWaitTime);
+			System.out.println("The Average Turnaround Time was: " + avgTurnAroundTime);
+
 			
 		}else if (schedueller.equals("P-PS")) {
 			//New List to hold processes
