@@ -64,9 +64,7 @@ public class modeller {
 			}
 			//call to conduct modeling with process list
 			
-			//Output of results
-			System.out.println("The Average Waiting Time was: ");
-			System.out.println("The Average Turnaround Time was: ");
+			sJFScheduling scheduler = new sJFScheduling(processes);
 		}else if (schedueller.equals("P-SJF")) {
 			//New List to hold processes
 			ArrayList<process> processes = new ArrayList<process>();
